@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Error from "./Error";
 
 const Form = ({patients, setPatients}) => {
-  const [patient, setPatient] = useState("");
+  const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -12,6 +12,13 @@ const Form = ({patients, setPatients}) => {
 
   const [error, setError] = useState(false);
 
+  const generateID = () => {
+    const random = Math.random().toString(36).substr(2);
+    const fecha = Date.now().toString(36)
+
+    return random + fecha 
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -19,7 +26,7 @@ const Form = ({patients, setPatients}) => {
 
     if (
       [
-        patient,
+        name,
         lastName,
         email,
         phone,
@@ -37,19 +44,20 @@ const Form = ({patients, setPatients}) => {
 
     //Objeto para los datos de los pacientes
     const objectPatient =  {
-      patient,
+      name,
       lastName,
       email,
       phone,
       date,
       availability,
       observations,
+      id: generateID()
     }
     setPatients([...patients, objectPatient]);
 
     // Para reiniciar el formulario
 
-    setPatient('')
+    setName('')
     setLastName('')
     setEmail('')
     setPhone('')
@@ -58,7 +66,7 @@ const Form = ({patients, setPatients}) => {
     setObservations('')
 
     const objectPatients = {
-        patient,
+        name,
         lastName,
         email,
         phone,
@@ -99,8 +107,8 @@ const Form = ({patients, setPatients}) => {
             type="text"
             placeholder="Nombre"
             className="border-2 w-full p-2 mt-2 placeholder-teal-500 rounded-md"
-            value={patient}
-            onChange={(e) => setPatient(e.target.value)}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 

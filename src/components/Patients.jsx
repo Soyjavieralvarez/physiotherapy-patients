@@ -1,47 +1,52 @@
 import React from 'react'
 
-const Patients = () => {
+const Patients = ({patient}) => {
+
+  const { name, lastName, email, phone, date, availability, observations} = patient
+  
   return (
     <div className="mx-5 my-10 bg-white shadow-md px-5 py-10 rounded-xl">
       <p className="font-bold mb-3 text-gray-600">Nombre: {""}
       <span className="font-normal text-teal-500">
-      Javier
+      {name}
       </span>
       </p>
 
       <p className="font-bold mb-3 text-gray-600">Apellidos: {""}
       <span className="font-normal text-teal-500">
-      Álvarez González
+      {lastName}
       </span>
       </p>
 
       <p className="font-bold mb-3 text-gray-600">Email del paciente: {""}
       <span className="font-normal text-teal-500">
-      Javier@javier.com
+      {email}
       </span>
       </p>
 
       <p className="font-bold mb-3 text-gray-600">Teléfono de contacto: {""}
       <span className="font-normal text-teal-500">
-      628 23 45 63
+      {phone}
       </span>
       </p>
 
       <p className="font-bold mb-3 text-gray-600">Fecha para la cita: {""}
       <span className="font-normal text-teal-500">
-      01/04/2023
+      {date}
       </span>
       </p>
 
       <p className="font-bold mb-3 text-gray-600">Disponibilidad horaria: {""}
       <span className="font-normal text-teal-500">
-      Por la tarde
+      {availability}
+
       </span>
       </p>
 
       <p className="font-bold mb-3 text-gray-600">Observaciones: {""}
       <span className="font-normal text-teal-500">
-      Rigidez en el cuello, tobillo izquierdo con poca movilidad y dolor en rodillas después de realizar deporte intenso
+      {observations}
+
       </span>
       </p>
     </div>
