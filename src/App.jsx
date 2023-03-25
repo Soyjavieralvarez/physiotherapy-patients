@@ -6,6 +6,12 @@ import PatientList from "./components/PatientList"
 function App() {
 
   const [patients, setPatients] = useState([]);
+  const [patient, setPatient] = useState({});
+  const deletedPatient = id => {
+    const patientsUpdate = patients.filter( patient => patient.id !== id);
+    setPatients(patientsUpdate)
+  }
+
 
  
   return (
@@ -16,9 +22,13 @@ function App() {
       <Form
       patients={patients}
        setPatients={setPatients}
+       patient={patient}
+       setPatient={setPatient}
        />
       <PatientList
       patients={patients}
+      setPatient={setPatient}
+      deletedPatient={deletedPatient}
        />
       </div>
       

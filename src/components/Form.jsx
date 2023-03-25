@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Error from "./Error";
 
-const Form = ({patients, setPatients}) => {
+const Form = ({patients, setPatients, patient, setPatient}) => {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -11,6 +11,18 @@ const Form = ({patients, setPatients}) => {
   const [observations, setObservations] = useState("");
 
   const [error, setError] = useState(false);
+
+  useEffect(() => {
+    if(Object.keys(patient).length > 0) {
+      setName(patient.name)
+      setLastName(patient.lastName)
+      setEmail(patient.email)
+      setPhone(patient.phone)
+      setDate(patient.date)
+      setAvailability(patient.availability)
+      setObservations(patient.observations)
+    } 
+  }, [patient])
 
   const generateID = () => {
     const random = Math.random().toString(36).substr(2);
@@ -35,7 +47,7 @@ const Form = ({patients, setPatients}) => {
         observations,
       ].includes("")
     ) {
-      console.log("Hay al menos un cambio vacío");
+      console.log("Hay al menos un campo vacío");
       setError(true);
       return;
     } 
@@ -53,10 +65,25 @@ const Form = ({patients, setPatients}) => {
       observations,
       id: generateID()
     }
-    setPatients([...patients, objectPatient]);
+    if(patient.id) {
+      //Editando el registro de paciente
+      objectPatient.id = patient.id;
+
+      const patientsUpdate = patients.map (patientState => patientState.id ===
+        patient.id ? objectPatient : patientState )
+
+        setPatients(patientsUpdate)
+        setPatient({})
+
+
+      } else {
+        // Nuevo registro
+        objectPatient.id = generateID ();
+        setPatients([...patients, objectPatient]);
+    }
+   
 
     // Para reiniciar el formulario
-
     setName('')
     setLastName('')
     setEmail('')
@@ -205,8 +232,8 @@ const Form = ({patients, setPatients}) => {
         {error && <Error message='Es obligatorio rellenar todos los campos'/>}
         <input
           type="submit"
-          className="bg-teal-500 w-full p-3 text-white font-bold hover:bg-teal-700 cursor-pointer transition-all"
-          value="Agregar paciente"
+          className="bg-teal-500 w-full p-3 text-white font-bold hover:bg-teal-700 cursor-pointer transition-all rounded-md"
+          value={ patient.id ? 'Editar paciente' : 'Añadir paciente'}
         />
         
       </form>
